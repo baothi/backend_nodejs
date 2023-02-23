@@ -1,0 +1,23 @@
+{
+  "name": "fullstack-nodejs",
+  "version": "1.0.0",
+  "description": "nodejs vs reactjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baothi?tab=repositories"
+  },
+  "keywords": [
+    "nodejs",
+    "reactjs"
+  ],
+  "author": "baothi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "4.18.2"
+  }
+}
