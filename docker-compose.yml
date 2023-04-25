@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  db-mysql:
+    image: mysql:5.7.40
+    container_name: backend_nodejs
+    restart: always
+    environment:
+      MYSQL_DATABASE: backend_nodejs
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USERNAME: root
+      MYSQL_USER_PORT: 3306
+      MYSQL_USER_HOST: localhost
+    ports:
+      - "3306:3306"
