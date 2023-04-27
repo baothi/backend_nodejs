@@ -3,6 +3,7 @@ const express = require('express');
 // setup ejs server , config template engine
 const configViewEngine = require('./config/viewEngine')
 const webRoutes = require('./routes/web');
+const apiRoutes = require('./routes/api');
 const connection = require('./config/database');
 
 
@@ -18,6 +19,7 @@ configViewEngine(app);
 
 
 app.use('/', webRoutes);
+app.use('/v1/api/', apiRoutes);
 
 (async () => {
   try {
