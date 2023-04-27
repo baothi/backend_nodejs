@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 // setup ejs server , config template engine
+const fileUpload = require('express-fileupload');
 const configViewEngine = require('./config/viewEngine')
 const webRoutes = require('./routes/web');
 const apiRoutes = require('./routes/api');
@@ -10,6 +11,10 @@ const connection = require('./config/database');
 const app = express();
 const port = process.env.PORT || 8080;
 const hostname = process.env.HOST_NAME || "localhost";
+
+// config file upload
+// default options
+app.use(fileUpload());
 
 // config req.body
 app.use(express.urlencoded({ extended: true }));
