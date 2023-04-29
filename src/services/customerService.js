@@ -1,5 +1,6 @@
 const e = require('express');
 const Customer = require('../models/customer');
+const aqp = require('api-query-params');
 
 const createCustomerService = async (customerData) => {
   try {
@@ -29,9 +30,20 @@ const createArrayCustomerService = async (arr) => {
   }
 };
 
-const getAllCustomerService = async () => {
+const getAllCustomerService = async (limit, page, name, queryString) => {
   try {
-    let result = await Customer.find({});
+    let result = null;
+    if (limit, page) {
+      let offset = (page - 1) * limit;
+      const { filter } = aqp(queryString);
+      delete filter.page;
+      console.log("result >>>>>>>>>>>>>>>>: ", filter)
+      result = await Customer.find(filter).skip(offset).limit(limit).exec();
+
+
+    } else {
+      result = await Customer.find({});
+    }
     return result;
   } catch (error) {
     console.log("check error >>> ", error);
@@ -41,7 +53,8 @@ const getAllCustomerService = async () => {
 
 const putUpdateCustomerService = async (id, email, name, address, phone, image, description) => {
   try {
-    let result = await Customer.updateOne({ _id: id }, { email: email, name: name, address });
+    console.log(id, email, name, address)
+    let result = await Customer.updateOne({ _id: id }, { email: email, name: name, address: address });
     return result;
   } catch (error) {
     console.log("check error >>> ", error);
@@ -59,9 +72,22 @@ const deleteCustomerService = async (id) => {
   }
 }
 
+const deleteArrCustomerService = async (ids) => {
+  try {
+    console.log("===============================================================================");
+    console.log(ids);
+    console.log("===============================================================================");
+    let result = await Customer.delete({ _id: { $in: ids } });
+    return result;
+  } catch (error) {
+    console.log("check error >>> ", error);
+    return null;
+  }
+}
+
 module.exports = {
   createCustomerService, createArrayCustomerService,
   getAllCustomerService, putUpdateCustomerService,
-  deleteCustomerService
+  deleteCustomerService, deleteArrCustomerService
 }
 

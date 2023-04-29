@@ -1,8 +1,10 @@
 const { uploadSingleFile, uploadMultipleFiles } = require('../services/FileService')
 const { createCustomerService, createArrayCustomerService,
   getAllCustomerService, putUpdateCustomerService,
-  deleteCustomerService }
+  deleteCustomerService, deleteArrCustomerService }
   = require('../services/customerService');
+
+
 
 module.exports = {
   postCreateCustomer: async (req, res) => {
@@ -41,11 +43,18 @@ module.exports = {
   },
 
   getAllCustomers: async (req, res) => {
-    let customer = await getAllCustomerService();
-    if (customer) {
+    let { limit, page, name } = req.query;
+    let result = null;
+    if (limit && page) {
+      result = await getAllCustomerService(limit, page, name, req.query);
+    } else {
+      result = await getAllCustomerService();
+    }
+
+    if (result) {
       return res.status(200).json({
         EC: 0,
-        data: customer
+        data: result
       });
     } else {
       return res.status(200).json({
@@ -74,6 +83,15 @@ module.exports = {
   deleteCustomer: async (req, res) => {
     let id = req.body.id;
     let result = await deleteCustomerService(id);
+    return res.status(200).json({
+      EC: 0,
+      data: result
+    });
+  },
+
+  deleteArrCustomer: async (req, res) => {
+    let ids = req.body.customersId;
+    let result = await deleteArrCustomerService(ids);
     return res.status(200).json({
       EC: 0,
       data: result

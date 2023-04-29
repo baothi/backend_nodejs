@@ -24,7 +24,14 @@ const customerSchema = new mongoose.Schema({
     type: String,
   },
 },
-  { timestamps: true },
+  {
+    timestamps: true,
+    // statics: {
+    //   findBybaothi(name) {
+    //     return this.find({ name: new RegExp(name, 'i') });
+    //   }
+    // }
+  },
 );
 customerSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
